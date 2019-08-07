@@ -1,10 +1,15 @@
 <template>
   <v-container>
-    Home
+    Login
   </v-container>
 </template>
 
 <script>
 export default {
+  name: 'Login'
 }
 </script>
+
+<style scoped>
+
+</style>
