@@ -1,6 +1,10 @@
 <template>
-  <v-container>
-    Login
+  <v-container fill-height>
+    <v-layout row wrap>
+      <v-flex>
+
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
