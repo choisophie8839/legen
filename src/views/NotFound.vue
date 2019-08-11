@@ -1,7 +1,7 @@
 <template>
-  <v-container>
-    Not Found
-  </v-container>
+  <v-content>
+    <h2>Page Not Found</h2>
+  </v-content>
 </template>
 
 <script>

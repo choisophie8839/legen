@@ -13,6 +13,7 @@ const requireAuth = (to, from, next) => {
   const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`
   isAuth ? next() : next(loginPath)
 }
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,

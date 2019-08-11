@@ -1,11 +1,11 @@
 <template>
-  <v-container>
+  <v-content>
     <v-layout>
       Card :
     </v-layout>
     <v-layout v-if="loading">Card Loading...</v-layout>
     <v-layout v-else>{{cid}}</v-layout>
-  </v-container>
+  </v-content>
 </template>
 
 <script>

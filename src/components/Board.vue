@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-content>
     <v-layout>
       Board : {{bid}}
     </v-layout>
@@ -11,7 +11,7 @@
     <v-layout>
       <router-view></router-view>
     </v-layout>
-  </v-container>
+  </v-content>
 </template>
 
 <script>
