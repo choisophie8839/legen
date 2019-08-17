@@ -3,51 +3,51 @@
     <v-layout row>
       <v-flex xs2 sm2 v-for="b in boards" :key="b.id" class="pb-5 ma-5">
         <v-card :color="b.bgColor" :to="`/board/${b.id}`">
-          <v-card-title ref="boardItem">{{b.title}}</v-card-title>
+          <v-card-title ref="boardItem" style="height: 100px">{{b.title}}</v-card-title>
         </v-card>
       </v-flex>
       <v-flex xs2 sm2 class="pb-5 ma-5">
-        <v-card @click.prevent="addBoard">
-          <v-card-title>Create New Board...</v-card-title>
+        <v-card @click.prevent="SET_IS_ADD_BOARD(true)">
+          <v-card-title style="height: 100px">Create New Board...</v-card-title>
         </v-card>
       </v-flex>
     </v-layout>
-    <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"></AddBoard>
+    <AddBoard></AddBoard>
   </v-content>
 </template>
 
 <script>
-import { board } from '../api'
 import AddBoard from '../components/AddBoard'
+import { mapState, mapMutations, mapActions } from 'vuex'
+
 export default {
   components: { AddBoard },
   data () {
     return {
       loading: false,
-      boards: [],
-      error: '',
-      isAddBoard: false
+      error: ''
     }
+  },
+  computed: {
+    ...mapState([
+      'isAddBoard', 'boards'
+    ])
   },
   created () {
     this.fetchData()
   },
   methods: {
+    ...mapMutations([
+      'SET_IS_ADD_BOARD'
+    ]),
+    ...mapActions([
+      'FETCH_BOARDS'
+    ]),
     fetchData () {
-      board.fetch()
-        .then(data => {
-          this.boards = data.list
-        })
-        .finally(_ => {
-          this.loading = false
-        })
-    },
-    addBoard () {
-      this.isAddBoard = true
-    },
-    onAddBoard (title) {
-      board.create(title)
-        .then(() => this.fetchData())
+      this.loading = true
+      this.FETCH_BOARDS().finally(_ => {
+        this.loading = false
+      })
     }
   }
 }
