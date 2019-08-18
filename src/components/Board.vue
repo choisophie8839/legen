@@ -1,22 +1,24 @@
 <template>
   <v-content>
     <v-layout>
-      Board : {{bid}}
+      <h2>Board : {{board.title}}</h2>
     </v-layout>
-    <v-layout v-if="loading">Loading Board</v-layout>
-    <v-layout v-else>
-      <router-link :to="`/board/${bid}/card/1`">Card1</router-link>
-      <router-link :to="`/board/${bid}/card/2`">Card2</router-link>
-    </v-layout>
-    <v-layout>
-      <router-view></router-view>
+    <v-layout row wrap>
+      <v-flex x3 v-for="list in board.lists" :key="list.pos">
+        <List :data="list"></List>
+      </v-flex>
     </v-layout>
   </v-content>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+import List from './List'
 export default {
   name: 'Board',
+  components: {
+    List
+  },
   data () {
     return {
       bid: 0,
@@ -26,13 +28,20 @@ export default {
   created () {
     this.fetchData()
   },
+  computed: {
+    ...mapState([
+      'board'
+    ])
+  },
   methods: {
+    ...mapActions([
+      'FETCH_BOARD'
+    ]),
     fetchData () {
       this.loading = true
-      setTimeout(() => {
-        this.bid = this.$route.params.bid
-        this.loading = false
-      }, 500)
+      this.FETCH_BOARD({ id: this.$route.params.bid })
+      // eslint-disable-next-line no-return-assign
+        .then(() => this.loading = false)
     }
   }
 }

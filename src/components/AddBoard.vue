@@ -48,9 +48,10 @@ export default {
     ]),
     addBoard () {
       this.SET_IS_ADD_BOARD(false)
-      this.ADD_BOARD({ title: this.boardName }).then(() => {
-        this.FETCH_BOARDS()
-      })
+      this.ADD_BOARD({ title: this.boardName })
+        .then(({ id }) => {
+          this.$router.push(`/board/${id}`)
+        })
     }
   }
 }
