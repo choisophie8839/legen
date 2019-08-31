@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'SET_IS_CARD',
+      'SET_IS_CARD'
     ]),
     ...mapActions([
       'DELETE_CARD'
