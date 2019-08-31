@@ -21,6 +21,22 @@ const actions = {
   ADD_CARD ({ dispatch, state }, { title, listId, pos }) {
     return api.card.create(title, listId, pos)
       .then(() => dispatch('FETCH_BOARD', { id: state.board.id }))
+  },
+  FETCH_CARD ({ commit }, { id }) {
+    return api.card.fetch(id).then((data) => {
+      commit('SET_CARD', data.item)
+    })
+  },
+  UPDATE_CARD ({ dispatch, state }, { id, title, description, pos, listId }) {
+    return api.card.update(id, { title, description, pos, listId })
+      .then(() => dispatch('FETCH_BOARD', { id: state.board.id }))
+  },
+  DELETE_CARD ({ dispatch, state }, { id }) {
+    return api.card.destroy(id)
+      .then(() => dispatch('FETCH_BOARD', { id: state.board.id }))
+  },
+  DELETE_BOARD (_, { id }) {
+    return api.board.destroy(id)
   }
 }
 

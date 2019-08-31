@@ -11,13 +11,23 @@
     </v-app-bar>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 export default {
   name: 'Navbar',
   computed: {
+    ...mapState([
+      'bodyColor',
+      'navBarColor'
+    ]),
     ...mapGetters([
       'isAuth'
     ])
+  },
+  watch: {
+    'bodyColor': 'updateTheme'
+  },
+  mounted () {
+    this.updateTheme()
   },
   methods: {
     ...mapMutations([
@@ -26,6 +36,13 @@ export default {
     logout () {
       this.LOGOUT()
       this.$router.push('/login')
+    },
+    updateTheme () {
+      this.$el.style.backgroundColor = this.navBarColor
+      const container = document.querySelector('.container')
+      const body = document.querySelector('.v-application--wrap')
+      if (body) body.style.backgroundColor = this.bodyColor
+      if (container) container.style.backgroundColor = this.bodyColor
     }
   }
 }

@@ -20,6 +20,19 @@ const mutations = {
   },
   SET_BOARD (state, board) {
     state.board = board
+  },
+  SET_IS_CARD (state, toggle) {
+    state.isCard = toggle
+  },
+  SET_CARD (state, card) {
+    state.card = card
+  },
+  SET_THEME (state, color) {
+    state.bodyColor = color || '#ffffff'
+    state.navBarColor = color ? 'rgba(0,0,0,.15)' : '#1976d2'
+  },
+  SET_IS_SHOW_BOARD_SETTINGS (state, toggle) {
+    state.isShowBoardSettings = toggle
   }
 }
 
