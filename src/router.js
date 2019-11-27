@@ -3,8 +3,16 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/Login'
 import NotFound from './views/NotFound'
+import Board from './components/Board'
+import Card from './components/Card'
+import store from './store'
 
 Vue.use(Router)
+
+const requireAuth = (to, from, next) => {
+  const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`
+  store.getters.isAuth ? next() : next(loginPath)
+}
 
 export default new Router({
   mode: 'history',
@@ -13,7 +21,8 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      beforeEnter: requireAuth
     },
     {
       path: '/about',
@@ -26,6 +35,18 @@ export default new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/board/:bid',
+      component: Board,
+      beforeEnter: requireAuth,
+      children: [
+        {
+          path: 'card/:cid',
+          component: Card,
+          beforeEnter: requireAuth
+        }
+      ]
     },
     {
       path: '*',
